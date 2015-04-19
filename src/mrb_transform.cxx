@@ -3,6 +3,7 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Transform.hpp>
+#include <mrb/sfml/graphics/transform.hxx>
 
 static struct RClass *transform_class;
 
@@ -21,6 +22,15 @@ static inline sf::Transform*
 get_transform(mrb_state *mrb, mrb_value self)
 {
   return (sf::Transform*)mrb_data_get_ptr(mrb, self, &mrb_sfml_transform_type);
+}
+
+extern "C" mrb_value
+mrb_sfml_transform_value(mrb_state *mrb, sf::Transform transform)
+{
+  mrb_value result = mrb_obj_new(mrb, transform_class, 0, NULL);
+  sf::Transform *target = get_transform(mrb, result);
+  *target = transform;
+  return result;
 }
 
 static mrb_value

@@ -26,7 +26,7 @@ template <typename T>
 static inline sf::Rect<T>*
 get_rect(mrb_state *mrb, mrb_value self)
 {
-  return (sf::Rect<T>*)mrb_data_get_ptr(mrb, self, mrb_get_sfml_rect_type<T>());
+  return static_cast<sf::Rect<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_rect_type<T>()));
 }
 
 extern "C" mrb_value
@@ -59,14 +59,27 @@ rect_initialize(mrb_state* mrb, mrb_value self)
   if (argc == 0) {
     rect = new sf::Rect<T>();
   } else if (argc == 2) {
-    rect = new sf::Rect<T>();
+    sf::Vector2<T> v1 = *static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, o1, mrb_get_sfml_vector2_type<T>()));
+    sf::Vector2<T> v2 = *static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, o2, mrb_get_sfml_vector2_type<T>()));
+    rect = new sf::Rect<T>(v1, v2);
   } else if (argc == 4) {
     rect = new sf::Rect<T>(cxx_mrb_cast<T>(mrb, o1), cxx_mrb_cast<T>(mrb, o2), cxx_mrb_cast<T>(mrb, o3), cxx_mrb_cast<T>(mrb, o4));
   } else {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Expected, 0, 2 or 4");
     return self;
   }
+  rect_free<T>(mrb, DATA_PTR(self));
   mrb_data_init(self, rect, mrb_get_sfml_rect_type<T>());
+  return self;
+}
+
+template <typename T> static mrb_value
+rect_initialize_copy(mrb_state* mrb, mrb_value self)
+{
+  sf::Rect<T> *other;
+  mrb_get_args(mrb, "d", &other, mrb_get_sfml_rect_type<T>());
+  rect_free<T>(mrb, DATA_PTR(self));
+  mrb_data_init(self, new sf::Rect<T>(*other), mrb_get_sfml_rect_type<T>());
   return self;
 }
 
@@ -130,7 +143,7 @@ rect_contains(mrb_state *mrb, mrb_value self)
   mrb_int argc = mrb_get_args(mrb, "o|o", &a, &b);
   sf::Rect<T> const *rect = get_rect<T>(mrb, self);
   if (argc == 1) {
-    sf::Vector2<T> vect = *((sf::Vector2<T>*)mrb_data_get_ptr(mrb, a, mrb_get_sfml_vector2_type<T>()));
+    sf::Vector2<T> vect = *(static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, a, mrb_get_sfml_vector2_type<T>())));
     return mrb_bool_value(rect->contains(vect));
   } else {
     return mrb_bool_value(rect->contains(cxx_mrb_cast<T>(mrb, a), cxx_mrb_cast<T>(mrb, b)));
@@ -157,17 +170,18 @@ rect_intersects(mrb_state *mrb, mrb_value self)
 template <typename T> static void
 rect_bind_class(mrb_state *mrb, struct RClass *cls)
 {
-  mrb_define_method(mrb, cls, "initialize", rect_initialize<T>, MRB_ARGS_ANY());
-  mrb_define_method(mrb, cls, "top",        rect_get_top<T>,    MRB_ARGS_NONE());
-  mrb_define_method(mrb, cls, "left",       rect_get_left<T>,   MRB_ARGS_NONE());
-  mrb_define_method(mrb, cls, "width",      rect_get_width<T>,  MRB_ARGS_NONE());
-  mrb_define_method(mrb, cls, "height",     rect_get_height<T>, MRB_ARGS_NONE());
-  mrb_define_method(mrb, cls, "top=",       rect_set_top<T>,    MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, cls, "left=",      rect_set_left<T>,   MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, cls, "width=",     rect_set_width<T>,  MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, cls, "height=",    rect_set_height<T>, MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, cls, "contains?",  rect_contains<T>,   MRB_ARGS_ARG(1,1));
-  mrb_define_method(mrb, cls, "contains?",  rect_intersects<T>, MRB_ARGS_ARG(1,1));
+  mrb_define_method(mrb, cls, "initialize",      rect_initialize<T>,      MRB_ARGS_ANY());
+  mrb_define_method(mrb, cls, "initialize_copy", rect_initialize_copy<T>, MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, cls, "top",             rect_get_top<T>,         MRB_ARGS_NONE());
+  mrb_define_method(mrb, cls, "left",            rect_get_left<T>,        MRB_ARGS_NONE());
+  mrb_define_method(mrb, cls, "width",           rect_get_width<T>,       MRB_ARGS_NONE());
+  mrb_define_method(mrb, cls, "height",          rect_get_height<T>,      MRB_ARGS_NONE());
+  mrb_define_method(mrb, cls, "top=",            rect_set_top<T>,         MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, cls, "left=",           rect_set_left<T>,        MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, cls, "width=",          rect_set_width<T>,       MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, cls, "height=",         rect_set_height<T>,      MRB_ARGS_REQ(1));
+  mrb_define_method(mrb, cls, "contains?",       rect_contains<T>,        MRB_ARGS_ARG(1,1));
+  mrb_define_method(mrb, cls, "contains?",       rect_intersects<T>,      MRB_ARGS_ARG(1,1));
 }
 
 extern "C" void
