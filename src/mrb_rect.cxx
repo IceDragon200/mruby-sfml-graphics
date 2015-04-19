@@ -187,11 +187,13 @@ rect_bind_class(mrb_state *mrb, struct RClass *cls)
 extern "C" void
 mrb_sfml_rect_init_bind(mrb_state *mrb, struct RClass *mod)
 {
-  int_rect_class = mrb_define_class_under(mrb, mod, "IntRect", mrb->object_class);
+  struct RClass *rect_class = mrb_define_class_under(mrb, mod, "Rect", mrb->object_class);
+
+  int_rect_class = mrb_define_class_under(mrb, mod, "IntRect", rect_class);
   MRB_SET_INSTANCE_TT(int_rect_class, MRB_TT_DATA);
   rect_bind_class<int>(mrb, int_rect_class);
 
-  float_rect_class = mrb_define_class_under(mrb, mod, "FloatRect", mrb->object_class);
+  float_rect_class = mrb_define_class_under(mrb, mod, "FloatRect", rect_class);
   MRB_SET_INSTANCE_TT(float_rect_class, MRB_TT_DATA);
   rect_bind_class<float>(mrb, float_rect_class);
 }
