@@ -1,6 +1,6 @@
 module SFML
-  class FloatRect
-    def initialize
-    end
+  # A rect with all its attributes as Floats
+  class FloatRect < Rect
+
   end
 end

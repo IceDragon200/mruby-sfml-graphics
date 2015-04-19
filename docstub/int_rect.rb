@@ -1,6 +1,6 @@
 module SFML
-  class IntRect
-    def initialize
-    end
+  # A rect with all its attributes as Integers
+  class IntRect < Rect
+
   end
 end
