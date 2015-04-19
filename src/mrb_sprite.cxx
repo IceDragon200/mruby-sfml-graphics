@@ -135,8 +135,10 @@ mrb_sfml_sprite_init_bind(mrb_state *mrb, struct RClass *mod)
   mrb_define_method(mrb, sprite_class, "get_local_bounds", sprite_get_local_bounds, MRB_ARGS_NONE());
   mrb_define_method(mrb, sprite_class, "get_global_bounds", sprite_get_global_bounds, MRB_ARGS_NONE());
 
+  mrb_define_alias(mrb, sprite_class, "texture=", "set_texture");
   mrb_define_alias(mrb, sprite_class, "color=", "set_color");
   mrb_define_alias(mrb, sprite_class, "texture_rect=", "set_texture_rect");
+
   mrb_define_alias(mrb, sprite_class, "texture", "get_texture");
   mrb_define_alias(mrb, sprite_class, "texture_rect", "get_texture_rect");
   mrb_define_alias(mrb, sprite_class, "color", "get_color");
