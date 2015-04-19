@@ -30,7 +30,7 @@ extern "C" const struct mrb_data_type mrb_sfml_shader_type = { "sf::Shader", sha
 static inline sf::Shader*
 get_shader(mrb_state *mrb, mrb_value self)
 {
-  return (sf::Shader*)mrb_data_get_ptr(mrb, self, &mrb_sfml_shader_type);
+  return static_cast<sf::Shader*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_shader_type));
 }
 
 static mrb_value
@@ -162,6 +162,7 @@ mrb_sfml_shader_init_bind(mrb_state *mrb, struct RClass *mod)
   mrb_define_method(mrb, shader_class, "load_from_file",   shader_load_from_file,   MRB_ARGS_REQ(2));
   mrb_define_method(mrb, shader_class, "load_from_memory", shader_load_from_memory, MRB_ARGS_REQ(2));
   mrb_define_method(mrb, shader_class, "set_parameter",    shader_set_parameter,    MRB_ARGS_ANY());
+
   //mrb_define_method(mrb, shader_class, "native_handle",   shader_get_native_handle, MRB_ARGS_NONE());
 
   mrb_define_class_method(mrb, shader_class, "bind",       shader_s_bind,      MRB_ARGS_REQ(1));
