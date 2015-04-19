@@ -1,6 +1,7 @@
 #include <mruby.h>
 #include <mruby/class.h>
 #include <SFML/Graphics.hpp>
+#include "mrb_blend_mode.hxx"
 #include "mrb_color.hxx"
 #include "mrb_image.hxx"
 #include "mrb_rect.hxx"
@@ -20,6 +21,7 @@ mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
   mrb_define_module_under(mrb, sfml_module, "Drawable");
   mrb_define_module_under(mrb, sfml_module, "Transformable");
 
+  mrb_sfml_blend_mode_init_bind(mrb, sfml_module);
   mrb_sfml_color_init_bind(mrb, sfml_module);
   mrb_sfml_rect_init_bind(mrb, sfml_module);
   mrb_sfml_image_init_bind(mrb, sfml_module);
