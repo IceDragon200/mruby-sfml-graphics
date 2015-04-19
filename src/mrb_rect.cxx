@@ -181,7 +181,7 @@ rect_bind_class(mrb_state *mrb, struct RClass *cls)
   mrb_define_method(mrb, cls, "width=",          rect_set_width<T>,       MRB_ARGS_REQ(1));
   mrb_define_method(mrb, cls, "height=",         rect_set_height<T>,      MRB_ARGS_REQ(1));
   mrb_define_method(mrb, cls, "contains?",       rect_contains<T>,        MRB_ARGS_ARG(1,1));
-  mrb_define_method(mrb, cls, "contains?",       rect_intersects<T>,      MRB_ARGS_ARG(1,1));
+  mrb_define_method(mrb, cls, "intersects?",     rect_intersects<T>,      MRB_ARGS_ARG(1,1));
 }
 
 extern "C" void
