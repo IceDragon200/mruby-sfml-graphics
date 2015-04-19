@@ -8,6 +8,7 @@
 #include "mrb_shader.hxx"
 #include "mrb_texture.hxx"
 #include "mrb_transform.hxx"
+#include "mrb_primitive_type.hxx"
 #include "mrb_shape.hxx"
 #include "mrb_circle_shape.hxx"
 #include "mrb_sprite.hxx"
@@ -24,10 +25,12 @@ mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
   mrb_sfml_blend_mode_init_bind(mrb, sfml_module);
   mrb_sfml_color_init_bind(mrb, sfml_module);
   mrb_sfml_rect_init_bind(mrb, sfml_module);
-  mrb_sfml_image_init_bind(mrb, sfml_module);
-  mrb_sfml_shader_init_bind(mrb, sfml_module);
-  mrb_sfml_texture_init_bind(mrb, sfml_module);
   mrb_sfml_transform_init_bind(mrb, sfml_module);
+  mrb_sfml_primitive_type_init_bind(mrb, sfml_module);
+  mrb_sfml_image_init_bind(mrb, sfml_module);
+  mrb_sfml_texture_init_bind(mrb, sfml_module);
+  mrb_sfml_shader_init_bind(mrb, sfml_module);
+
   mrb_sfml_shape_init_bind(mrb, sfml_module);
   mrb_sfml_circle_shape_init_bind(mrb, sfml_module);
   mrb_sfml_sprite_init_bind(mrb, sfml_module);
