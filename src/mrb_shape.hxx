@@ -102,6 +102,7 @@ shape_set_outline_thickness(mrb_state *mrb, mrb_value self)
   return self;
 }
 
+template <class T>
 static mrb_value
 shape_get_texture(mrb_state *mrb, mrb_value self)
 {
@@ -178,7 +179,7 @@ shape_bind_class(mrb_state *mrb, struct RClass *cls)
   mrb_define_method(mrb, cls, "set_outline_color",     shape_set_outline_color<T>,     MRB_ARGS_REQ(1));
   mrb_define_method(mrb, cls, "set_outline_thickness", shape_set_outline_thickness<T>, MRB_ARGS_REQ(1));
 
-  mrb_define_method(mrb, cls, "get_texture",           shape_get_texture,              MRB_ARGS_NONE());
+  mrb_define_method(mrb, cls, "get_texture",           shape_get_texture<T>,           MRB_ARGS_NONE());
   mrb_define_method(mrb, cls, "get_texture_rect",      shape_get_texture_rect<T>,      MRB_ARGS_NONE());
   mrb_define_method(mrb, cls, "get_fill_color",        shape_get_fill_color<T>,        MRB_ARGS_NONE());
   mrb_define_method(mrb, cls, "get_outline_color",     shape_get_outline_color<T>,     MRB_ARGS_NONE());
