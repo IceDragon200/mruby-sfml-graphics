@@ -27,7 +27,7 @@ static mrb_value
 blend_mode_initialize(mrb_state *mrb, mrb_value self)
 {
   mrb_int a, b, c, d, e, f;
-  mrb_int argc = mrb_get_args(mrb, "iii|iii", &a, &b, &c, &d, &e, &f);
+  mrb_int argc = mrb_get_args(mrb, "|iiiiii", &a, &b, &c, &d, &e, &f);
   sf::BlendMode *blend_mode;
   if (argc == 0) {
     blend_mode = new sf::BlendMode();
@@ -141,6 +141,7 @@ mrb_sfml_blend_mode_init_bind(mrb_state *mrb, struct RClass *mod)
   struct RClass *blend_mode_factor_module;
   struct RClass *blend_mode_equation_module;
   blend_mode_class = mrb_define_class_under(mrb, mod, "BlendMode", mrb->object_class);
+  MRB_SET_INSTANCE_TT(blend_mode_class, MRB_TT_DATA);
   blend_mode_factor_module = mrb_define_module_under(mrb, blend_mode_class, "Factor");
   blend_mode_equation_module = mrb_define_module_under(mrb, blend_mode_class, "Equation");
 
