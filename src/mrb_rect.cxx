@@ -29,6 +29,13 @@ get_rect(mrb_state *mrb, mrb_value self)
   return static_cast<sf::Rect<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_rect_type<T>()));
 }
 
+template <typename T>
+static inline sf::Vector2<T>*
+get_vector2(mrb_state *mrb, mrb_value self)
+{
+  return static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_vector2_type<T>()));
+}
+
 extern "C" mrb_value
 mrb_sfml_float_rect_value(mrb_state *mrb, sf::FloatRect r)
 {
@@ -59,8 +66,8 @@ rect_initialize(mrb_state* mrb, mrb_value self)
   if (argc == 0) {
     rect = new sf::Rect<T>();
   } else if (argc == 2) {
-    sf::Vector2<T> v1 = *static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, o1, mrb_get_sfml_vector2_type<T>()));
-    sf::Vector2<T> v2 = *static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, o2, mrb_get_sfml_vector2_type<T>()));
+    sf::Vector2<T> v1 = *get_vector2<T>(mrb, o1);
+    sf::Vector2<T> v2 = *get_vector2<T>(mrb, o2);
     rect = new sf::Rect<T>(v1, v2);
   } else if (argc == 4) {
     rect = new sf::Rect<T>(cxx_mrb_cast<T>(mrb, o1), cxx_mrb_cast<T>(mrb, o2), cxx_mrb_cast<T>(mrb, o3), cxx_mrb_cast<T>(mrb, o4));
