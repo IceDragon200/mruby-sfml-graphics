@@ -32,6 +32,7 @@ static mrb_value
 image_initialize(mrb_state *mrb, mrb_value self)
 {
   sf::Image *image = new sf::Image();
+  image_free(mrb, DATA_PTR(self));
   mrb_data_init(self, image, &mrb_sfml_image_type);
   return self;
 }

@@ -37,6 +37,7 @@ static mrb_value
 shader_initialize(mrb_state *mrb, mrb_value self)
 {
   sf::Shader *shader = new sf::Shader();
+  shader_free(mrb, DATA_PTR(self));
   mrb_data_init(self, shader, &mrb_sfml_shader_type);
   return self;
 }

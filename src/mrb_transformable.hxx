@@ -9,6 +9,7 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Transformable.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
 #include "mrb/sfml/graphics/transformable.hxx"
 #include "mrb/sfml/system/vector2.hxx"
@@ -24,9 +25,7 @@ template <class T>
 static inline T*
 get_transformable(mrb_state *mrb, mrb_value self)
 {
-  T *transformable = static_cast<T*>(DATA_PTR(self));
-  assert(transformable);
-  return transformable;
+  return cxx_mrb_data_get_ptr<T>(mrb, self);
 }
 
 template <class T>

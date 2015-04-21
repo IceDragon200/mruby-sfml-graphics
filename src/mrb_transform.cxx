@@ -3,6 +3,7 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Transform.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
 #include "mrb/sfml/system/vector2.hxx"
 #include "mrb/sfml/graphics/rect.hxx"
@@ -55,6 +56,7 @@ transform_initialize(mrb_state *mrb, mrb_value self)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 0 or 9.");
     return self;
   }
+  transform_free(mrb, DATA_PTR(self));
   mrb_data_init(self, transform, &mrb_sfml_transform_type);
   return self;
 }
@@ -165,7 +167,7 @@ transform_mul(mrb_state *mrb, mrb_value self)
 {
   mrb_value obj;
   mrb_get_args(mrb, "o", &obj);
-  mrb_check_type(mrb, obj, MRB_TT_DATA);
+  cxx_mrb_ensure_type_data(mrb, obj);
   if (DATA_TYPE(obj) == &mrb_sfml_transform_type) {
     return mrb_sfml_transform_value(mrb, (*get_transform(mrb, self)) * (*get_transform(mrb, obj)));
   } else if (DATA_TYPE(obj) == &mrb_sfml_vector2f_type) {

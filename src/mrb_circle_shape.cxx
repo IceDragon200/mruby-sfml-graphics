@@ -40,7 +40,7 @@ circle_shape_initialize(mrb_state *mrb, mrb_value self)
     circle_shape = new sf::CircleShape(radius, point_count);
   } else {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 0, 1 or 2");
-    return self;
+    return mrb_nil_value();
   }
   circle_shape_free(mrb, DATA_PTR(self));
   mrb_data_init(self, circle_shape, &mrb_sfml_circle_shape_type);

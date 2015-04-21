@@ -8,6 +8,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/texture.hxx"
 #include "mrb/sfml/graphics/color.hxx"
 #include "mrb/sfml/graphics/rect.hxx"
@@ -27,9 +28,7 @@ template <class T>
 static inline T*
 get_shape(mrb_state *mrb, mrb_value self)
 {
-  T *shape = static_cast<T*>(DATA_PTR(self));
-  assert(shape);
-  return shape;
+  return cxx_mrb_data_get_ptr<T>(mrb, self);
 }
 
 static inline sf::Texture*

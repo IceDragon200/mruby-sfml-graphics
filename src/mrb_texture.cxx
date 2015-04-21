@@ -27,6 +27,7 @@ static mrb_value
 texture_initialize(mrb_state *mrb, mrb_value self)
 {
   sf::Texture *texture = new sf::Texture();
+  texture_free(mrb, DATA_PTR(self));
   mrb_data_init(self, texture, &mrb_sfml_texture_type);
   return self;
 }

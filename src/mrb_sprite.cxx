@@ -42,6 +42,7 @@ static mrb_value
 sprite_initialize(mrb_state *mrb, mrb_value self)
 {
   sf::Sprite *sprite = new sf::Sprite();
+  sprite_free(mrb, DATA_PTR(self));
   mrb_data_init(self, sprite, &mrb_sfml_sprite_type);
   return self;
 }

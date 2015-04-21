@@ -17,9 +17,7 @@ template <class T>
 static inline T*
 get_drawable(mrb_state *mrb, mrb_value self)
 {
-  T *drawable = static_cast<T*>(DATA_PTR(self));
-  assert(drawable);
-  return drawable;
+  return cxx_mrb_data_get_ptr<T>(mrb, self);
 }
 
 template <class T>

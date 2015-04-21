@@ -40,6 +40,7 @@ blend_mode_initialize(mrb_state *mrb, mrb_value self)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected, 0, 3 or 6");
     return self;
   }
+  blend_mode_free(mrb, DATA_PTR(self));
   mrb_data_init(self, blend_mode, &mrb_sfml_blend_mode_type);
   return self;
 }

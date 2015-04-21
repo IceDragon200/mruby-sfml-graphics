@@ -50,6 +50,7 @@ color_initialize(mrb_state *mrb, mrb_value self)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "Expected 0, 3, or 4");
     return self;
   }
+  color_free(mrb, DATA_PTR(self));
   mrb_data_init(self, color, &mrb_sfml_color_type);
   return self;
 }
