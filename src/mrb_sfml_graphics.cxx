@@ -12,6 +12,7 @@
 #include "mrb_shape.hxx"
 #include "mrb_circle_shape.hxx"
 #include "mrb_convex_shape.hxx"
+#include "mrb_rectangle_shape.hxx"
 #include "mrb_sprite.hxx"
 
 static struct RClass *sfml_module;
@@ -35,6 +36,7 @@ mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
   mrb_sfml_shape_init_bind(mrb, sfml_module);
   mrb_sfml_circle_shape_init_bind(mrb, sfml_module);
   mrb_sfml_convex_shape_init_bind(mrb, sfml_module);
+  mrb_sfml_rectangle_shape_init_bind(mrb, sfml_module);
   mrb_sfml_sprite_init_bind(mrb, sfml_module);
 }
 
