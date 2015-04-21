@@ -57,7 +57,7 @@ shape_set_texture(mrb_state *mrb, mrb_value self)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 1 or 2");
   }
   /* Keeps the texture alive as long as the Sprite exists */
-  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "__sfml_texture"), texture_obj);
+  mrb_iv_set(mrb, self, mrb_intern_lit(mrb, "__sfml_texture"), texture_obj);
   return self;
   return self;
 }
@@ -96,9 +96,9 @@ template <class T>
 static mrb_value
 shape_set_outline_thickness(mrb_state *mrb, mrb_value self)
 {
-  mrb_float *thickness;
+  mrb_float thickness;
   mrb_get_args(mrb, "f", &thickness);
-  get_shape<T>(mrb, self)->setOutlineThickness(*thickness);
+  get_shape<T>(mrb, self)->setOutlineThickness(thickness);
   return self;
 }
 
@@ -106,7 +106,7 @@ template <class T>
 static mrb_value
 shape_get_texture(mrb_state *mrb, mrb_value self)
 {
-  return mrb_iv_get(mrb, self, mrb_intern_cstr(mrb, "__sfml_texture"));
+  return mrb_iv_get(mrb, self, mrb_intern_lit(mrb, "__sfml_texture"));
 }
 
 template <class T>

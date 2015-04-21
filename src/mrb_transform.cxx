@@ -146,7 +146,7 @@ transform_scale(mrb_state *mrb, mrb_value self)
   sf::Transform *transform;
   mrb_float scale_y, center_x, center_y;
   mrb_value obj;
-  mrb_int argc = mrb_get_args(mrb, "o|fff", &scale_y, &center_x, &center_y);
+  mrb_int argc = mrb_get_args(mrb, "o|fff", &obj, &scale_y, &center_x, &center_y);
   transform = get_transform(mrb, self);
   if (argc == 1) {
     return mrb_sfml_transform_value(mrb, transform->scale(*get_vector2f(mrb, obj)));

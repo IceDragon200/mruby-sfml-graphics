@@ -64,7 +64,7 @@ sprite_set_texture(mrb_state *mrb, mrb_value self)
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 1 or 2");
   }
   /* Keeps the texture alive as long as the Sprite exists */
-  mrb_iv_set(mrb, self, mrb_intern_cstr(mrb, "__sfml_texture"), texture_obj);
+  mrb_iv_set(mrb, self, mrb_intern_lit(mrb, "__sfml_texture"), texture_obj);
   return self;
 }
 
@@ -89,7 +89,7 @@ sprite_set_color(mrb_state *mrb, mrb_value self)
 static mrb_value
 sprite_get_texture(mrb_state *mrb, mrb_value self)
 {
-  return mrb_iv_get(mrb, self, mrb_intern_cstr(mrb, "__sfml_texture"));
+  return mrb_iv_get(mrb, self, mrb_intern_lit(mrb, "__sfml_texture"));
 }
 
 static mrb_value
