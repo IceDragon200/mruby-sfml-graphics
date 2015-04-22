@@ -23,6 +23,15 @@ get_blend_mode(mrb_state *mrb, mrb_value self)
   return static_cast<sf::BlendMode*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_blend_mode_type));
 }
 
+extern "C" mrb_value
+mrb_sfml_blend_mode_value(mrb_state *mrb, sf::BlendMode blend_mode)
+{
+  mrb_value result = mrb_obj_new(mrb, blend_mode_class, 0, NULL);
+  sf::BlendMode *target = get_blend_mode(mrb, result);
+  *target = blend_mode;
+  return result;
+}
+
 static mrb_value
 blend_mode_initialize(mrb_state *mrb, mrb_value self)
 {
