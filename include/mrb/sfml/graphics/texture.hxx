@@ -3,7 +3,14 @@
 
 #include <mruby.h>
 #include <mruby/data.h>
+#include <SFML/Graphics/Texture.hpp>
 
 extern "C" const struct mrb_data_type mrb_sfml_texture_type;
+
+static inline sf::Texture*
+mrb_sfml_texture_ptr(mrb_state *mrb, mrb_value self)
+{
+  return static_cast<sf::Texture*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_texture_type));
+}
 
 #endif

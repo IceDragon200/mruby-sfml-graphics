@@ -7,4 +7,10 @@
 
 extern "C" const struct mrb_data_type mrb_sfml_render_states_type;
 
+static inline sf::RenderStates*
+mrb_sfml_render_states_ptr(mrb_state *mrb, mrb_value self)
+{
+  return static_cast<sf::RenderStates*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_render_states_type));
+}
+
 #endif
