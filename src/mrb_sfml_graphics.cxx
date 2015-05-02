@@ -1,20 +1,25 @@
 #include <mruby.h>
 #include <mruby/class.h>
 #include <SFML/Graphics.hpp>
-#include "mrb_primitive_type.hxx"
 #include "mrb_blend_mode.hxx"
+#include "mrb_circle_shape.hxx"
 #include "mrb_color.hxx"
+#include "mrb_convex_shape.hxx"
+#include "mrb_font.hxx"
+#include "mrb_glyph.hxx"
 #include "mrb_image.hxx"
+#include "mrb_primitive_type.hxx"
 #include "mrb_rect.hxx"
+#include "mrb_rectangle_shape.hxx"
+#include "mrb_render_states.hxx"
+#include "mrb_render_window.hxx"
 #include "mrb_shader.hxx"
+#include "mrb_shape.hxx"
+#include "mrb_sprite.hxx"
+#include "mrb_text.hxx"
 #include "mrb_texture.hxx"
 #include "mrb_transform.hxx"
-#include "mrb_render_states.hxx"
-#include "mrb_shape.hxx"
-#include "mrb_circle_shape.hxx"
-#include "mrb_convex_shape.hxx"
-#include "mrb_rectangle_shape.hxx"
-#include "mrb_sprite.hxx"
+#include "mrb_view.hxx"
 
 static struct RClass *sfml_module;
 
@@ -34,12 +39,19 @@ mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
   mrb_sfml_texture_init_bind(mrb, sfml_module);
   mrb_sfml_shader_init_bind(mrb, sfml_module);
   mrb_sfml_render_states_init_bind(mrb, sfml_module);
+  mrb_sfml_render_window_init_bind(mrb, sfml_module);
 
   mrb_sfml_shape_init_bind(mrb, sfml_module);
   mrb_sfml_circle_shape_init_bind(mrb, sfml_module);
   mrb_sfml_convex_shape_init_bind(mrb, sfml_module);
   mrb_sfml_rectangle_shape_init_bind(mrb, sfml_module);
   mrb_sfml_sprite_init_bind(mrb, sfml_module);
+
+  mrb_sfml_glyph_init_bind(mrb, sfml_module);
+  mrb_sfml_font_init_bind(mrb, sfml_module);
+  mrb_sfml_text_init_bind(mrb, sfml_module);
+
+  mrb_sfml_view_init_bind(mrb, sfml_module);
 }
 
 extern "C" void
