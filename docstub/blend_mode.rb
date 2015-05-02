@@ -65,7 +65,8 @@ module SFML
     def initialize(*args)
     end
 
-    # @param [BlendMode]
+    # @param [BlendMode] other
+    # @return [Boolean]
     def ==(other)
     end
   end
