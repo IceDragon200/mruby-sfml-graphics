@@ -3,6 +3,7 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Image.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/image.hxx"
 #include "mrb/sfml/graphics/color.hxx"
 #include "mrb/sfml/graphics/rect.hxx"
@@ -10,22 +11,16 @@
 #include "mrb_image.hxx"
 
 static struct RClass *image_class;
-
-static void
-image_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::Image *image = (sf::Image*)ptr;
-    delete image;
-  }
-}
-
+static mrb_data_free_func image_free = cxx_mrb_data_free<sf::Image>;
 extern "C" const struct mrb_data_type mrb_sfml_image_type = { "sf::Image", image_free };
 
-static inline sf::Image*
-get_image(mrb_state *mrb, mrb_value self)
+extern "C" mrb_value
+mrb_sfml_image_value(mrb_state *mrb, sf::Image img)
 {
-  return (sf::Image*)mrb_data_get_ptr(mrb, self, &mrb_sfml_image_type);
+  mrb_value result = mrb_obj_new(mrb, image_class, 0, NULL);
+  sf::Image *target = mrb_sfml_image_ptr(mrb, result);
+  *target = img;
+  return result;
 }
 
 static mrb_value
@@ -45,9 +40,9 @@ image_create(mrb_state *mrb, mrb_value self)
   sf::Color *color = NULL;
   mrb_get_args(mrb, "ii|d", &w, &h, &color, &mrb_sfml_color_type);
   if (color) {
-    get_image(mrb, self)->create(w, h, *color);
+    mrb_sfml_image_ptr(mrb, self)->create(w, h, *color);
   } else {
-    get_image(mrb, self)->create(w, h);
+    mrb_sfml_image_ptr(mrb, self)->create(w, h);
   }
   return self;
 }
@@ -57,7 +52,7 @@ image_load_from_file(mrb_state *mrb, mrb_value self)
 {
   char *name;
   mrb_get_args(mrb, "z", &name);
-  return mrb_bool_value(get_image(mrb, self)->loadFromFile(std::string(name)));
+  return mrb_bool_value(mrb_sfml_image_ptr(mrb, self)->loadFromFile(std::string(name)));
 }
 
 static mrb_value
@@ -65,13 +60,13 @@ image_save_to_file(mrb_state *mrb, mrb_value self)
 {
   char *name;
   mrb_get_args(mrb, "z", &name);
-  return mrb_bool_value(get_image(mrb, self)->saveToFile(std::string(name)));
+  return mrb_bool_value(mrb_sfml_image_ptr(mrb, self)->saveToFile(std::string(name)));
 }
 
 static mrb_value
 image_get_size(mrb_state *mrb, mrb_value self)
 {
-  return mrb_sfml_vector2u_value(mrb, get_image(mrb, self)->getSize());
+  return mrb_sfml_vector2u_value(mrb, mrb_sfml_image_ptr(mrb, self)->getSize());
 }
 
 static mrb_value
@@ -80,7 +75,7 @@ image_create_mask_from_color(mrb_state *mrb, mrb_value self)
   sf::Color *color;
   mrb_int alpha;
   mrb_get_args(mrb, "d|i", &color, &mrb_sfml_color_type, &alpha);
-  get_image(mrb, self)->createMaskFromColor(*color, alpha);
+  mrb_sfml_image_ptr(mrb, self)->createMaskFromColor(*color, alpha);
   return self;
 }
 
@@ -96,11 +91,11 @@ image_copy(mrb_state *mrb, mrb_value self)
                               &src_rect, &mrb_sfml_int_rect_type,
                               &apply_alpha);
   if (argc == 3) {
-    get_image(mrb, self)->copy(*source, x, y);
+    mrb_sfml_image_ptr(mrb, self)->copy(*source, x, y);
   } else if (argc == 4) {
-    get_image(mrb, self)->copy(*source, x, y, *src_rect);
+    mrb_sfml_image_ptr(mrb, self)->copy(*source, x, y, *src_rect);
   } else if (argc == 5) {
-    get_image(mrb, self)->copy(*source, x, y, *src_rect, apply_alpha);
+    mrb_sfml_image_ptr(mrb, self)->copy(*source, x, y, *src_rect, apply_alpha);
   } else {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 3, 4, or 5");
   }
@@ -113,7 +108,7 @@ image_set_pixel(mrb_state *mrb, mrb_value self)
   mrb_int x, y;
   sf::Color *color;
   mrb_get_args(mrb, "iid", &x, &y, &color, &mrb_sfml_color_type);
-  get_image(mrb, self)->setPixel(x, y, *color);
+  mrb_sfml_image_ptr(mrb, self)->setPixel(x, y, *color);
   return self;
 }
 
@@ -122,20 +117,20 @@ image_get_pixel(mrb_state *mrb, mrb_value self)
 {
   mrb_int x, y;
   mrb_get_args(mrb, "ii", &x, &y);
-  return mrb_sfml_color_value(mrb, get_image(mrb, self)->getPixel(x, y));
+  return mrb_sfml_color_value(mrb, mrb_sfml_image_ptr(mrb, self)->getPixel(x, y));
 }
 
 static mrb_value
 image_flip_horizontally(mrb_state *mrb, mrb_value self)
 {
-  get_image(mrb, self)->flipHorizontally();
+  mrb_sfml_image_ptr(mrb, self)->flipHorizontally();
   return self;
 }
 
 static mrb_value
 image_flip_vertically(mrb_state *mrb, mrb_value self)
 {
-  get_image(mrb, self)->flipVertically();
+  mrb_sfml_image_ptr(mrb, self)->flipVertically();
   return self;
 }
 

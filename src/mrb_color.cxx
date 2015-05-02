@@ -3,33 +3,20 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Color.hpp>
-#include "mrb_color.hxx"
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/color.hxx"
+#include "mrb_color.hxx"
 
 static struct RClass *color_class;
-
-static void
-color_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::Color *color = (sf::Color*)ptr;
-    delete color;
-  }
-}
+static mrb_data_free_func color_free = cxx_mrb_data_free<sf::Color>;
 
 extern "C" const struct mrb_data_type mrb_sfml_color_type = { "sf::Color", color_free };
-
-static inline sf::Color*
-get_color(mrb_state *mrb, mrb_value self)
-{
-  return (sf::Color*)mrb_data_get_ptr(mrb, self, &mrb_sfml_color_type);
-}
 
 extern "C" mrb_value
 mrb_sfml_color_value(mrb_state *mrb, sf::Color color)
 {
   mrb_value result = mrb_obj_new(mrb, color_class, 0, NULL);
-  sf::Color *target = get_color(mrb, result);
+  sf::Color *target = mrb_sfml_color_ptr(mrb, result);
   *target = color;
   return result;
 }
@@ -67,25 +54,25 @@ color_initialize_copy(mrb_state *mrb, mrb_value self)
 static mrb_value
 color_get_r(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_color(mrb, self)->r);
+  return mrb_fixnum_value(mrb_sfml_color_ptr(mrb, self)->r);
 }
 
 static mrb_value
 color_get_g(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_color(mrb, self)->g);
+  return mrb_fixnum_value(mrb_sfml_color_ptr(mrb, self)->g);
 }
 
 static mrb_value
 color_get_b(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_color(mrb, self)->b);
+  return mrb_fixnum_value(mrb_sfml_color_ptr(mrb, self)->b);
 }
 
 static mrb_value
 color_get_a(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_color(mrb, self)->a);
+  return mrb_fixnum_value(mrb_sfml_color_ptr(mrb, self)->a);
 }
 
 static mrb_value
@@ -93,7 +80,7 @@ color_set_r(mrb_state *mrb, mrb_value self)
 {
   mrb_int v;
   mrb_get_args(mrb, "i", &v);
-  get_color(mrb, self)->r = v;
+  mrb_sfml_color_ptr(mrb, self)->r = v;
   return self;
 }
 
@@ -102,7 +89,7 @@ color_set_g(mrb_state *mrb, mrb_value self)
 {
   mrb_int v;
   mrb_get_args(mrb, "i", &v);
-  get_color(mrb, self)->g = v;
+  mrb_sfml_color_ptr(mrb, self)->g = v;
   return self;
 }
 
@@ -111,7 +98,7 @@ color_set_b(mrb_state *mrb, mrb_value self)
 {
   mrb_int v;
   mrb_get_args(mrb, "i", &v);
-  get_color(mrb, self)->b = v;
+  mrb_sfml_color_ptr(mrb, self)->b = v;
   return self;
 }
 
@@ -120,7 +107,7 @@ color_set_a(mrb_state *mrb, mrb_value self)
 {
   mrb_int v;
   mrb_get_args(mrb, "i", &v);
-  get_color(mrb, self)->a = v;
+  mrb_sfml_color_ptr(mrb, self)->a = v;
   return self;
 }
 
@@ -130,7 +117,7 @@ color_eq(mrb_state *mrb, mrb_value self)
   sf::Color *other;
   sf::Color *col;
   mrb_get_args(mrb, "d", &other, &mrb_sfml_color_type);
-  col = get_color(mrb, self);
+  col = mrb_sfml_color_ptr(mrb, self);
   return mrb_bool_value(*col == *other);
 }
 
@@ -140,7 +127,7 @@ color_add(mrb_state *mrb, mrb_value self)
   sf::Color *other;
   sf::Color *col;
   mrb_get_args(mrb, "d", &other, &mrb_sfml_color_type);
-  col = get_color(mrb, self);
+  col = mrb_sfml_color_ptr(mrb, self);
   return mrb_sfml_color_value(mrb, *col + *other);
 }
 
@@ -150,7 +137,7 @@ color_sub(mrb_state *mrb, mrb_value self)
   sf::Color *other;
   sf::Color *col;
   mrb_get_args(mrb, "d", &other, &mrb_sfml_color_type);
-  col = get_color(mrb, self);
+  col = mrb_sfml_color_ptr(mrb, self);
   return mrb_sfml_color_value(mrb, *col - *other);
 }
 
@@ -160,7 +147,7 @@ color_mul(mrb_state *mrb, mrb_value self)
   sf::Color *other;
   sf::Color *col;
   mrb_get_args(mrb, "d", &other, &mrb_sfml_color_type);
-  col = get_color(mrb, self);
+  col = mrb_sfml_color_ptr(mrb, self);
   return mrb_sfml_color_value(mrb, *col * *other);
 }
 

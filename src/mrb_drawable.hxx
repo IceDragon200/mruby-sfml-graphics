@@ -5,6 +5,7 @@
 #include <mruby/class.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/Drawable.hpp>
+#include "mrb/cxx/helpers.hxx"
 
 /*
  * WARNING: DO NOT, and I repeat, DO NOT USE THIS FUNCTION ON NON-DRAWABLE

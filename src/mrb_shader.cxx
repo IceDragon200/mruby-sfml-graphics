@@ -5,6 +5,7 @@
 #include <mruby/string.h>
 #include <SFML/Graphics/Shader.hpp>
 #include <string>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/shader.hxx"
 #include "mrb/sfml/graphics/color.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
@@ -15,23 +16,8 @@
 
 static struct RClass *shader_class;
 static struct RClass *shader_type_module;
-
-static void
-shader_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::Shader *shader = (sf::Shader*)ptr;
-    delete shader;
-  }
-}
-
+static mrb_data_free_func shader_free = cxx_mrb_data_free<sf::Shader>;
 extern "C" const struct mrb_data_type mrb_sfml_shader_type = { "sf::Shader", shader_free };
-
-static inline sf::Shader*
-get_shader(mrb_state *mrb, mrb_value self)
-{
-  return static_cast<sf::Shader*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_shader_type));
-}
 
 static mrb_value
 shader_initialize(mrb_state *mrb, mrb_value self)
@@ -48,7 +34,7 @@ shader_load_from_file(mrb_state *mrb, mrb_value self)
   char *name;
   mrb_value other;
   mrb_get_args(mrb, "zo", &name, &other);
-  sf::Shader *shader = get_shader(mrb, self);
+  sf::Shader *shader = mrb_sfml_shader_ptr(mrb, self);
   if (mrb_type(other) == MRB_TT_FIXNUM) {
     mrb_bool_value(shader->loadFromFile(std::string(name), (sf::Shader::Type)mrb_int(mrb, other)));
   } else if (mrb_type(other) == MRB_TT_STRING) {
@@ -65,7 +51,7 @@ shader_load_from_memory(mrb_state *mrb, mrb_value self)
   char *name;
   mrb_value other;
   mrb_get_args(mrb, "zo", &name, &other);
-  sf::Shader *shader = get_shader(mrb, self);
+  sf::Shader *shader = mrb_sfml_shader_ptr(mrb, self);
   if (mrb_type(other) == MRB_TT_FIXNUM) {
     mrb_bool_value(shader->loadFromMemory(std::string(name), (sf::Shader::Type)mrb_int(mrb, other)));
   } else if (mrb_type(other) == MRB_TT_STRING) {
@@ -104,7 +90,7 @@ shader_set_parameter(mrb_state *mrb, mrb_value self)
   mrb_value x;
   mrb_float y, z, w;
   mrb_int argc = mrb_get_args(mrb, "zo|fff", &name, &x, &y, &z, &w);
-  shader = get_shader(mrb, self);
+  shader = mrb_sfml_shader_ptr(mrb, self);
   std::string sname(name);
   if (argc == 2) {
     switch (mrb_type(x)) {
@@ -134,7 +120,7 @@ shader_set_parameter(mrb_state *mrb, mrb_value self)
 //static mrb_value
 //shader_get_native_handle(mrb_state *mrb, mrb_value self)
 //{
-//  return mrb_fixnum_value(get_shader(mrb, self)->getNativeHandle());
+//  return mrb_fixnum_value(mrb_sfml_shader_ptr(mrb, self)->getNativeHandle());
 //}
 
 static mrb_value

@@ -7,30 +7,23 @@
 #include "mrb/sfml/graphics/transform.hxx"
 #include "mrb/sfml/system/vector2.hxx"
 #include "mrb/sfml/graphics/rect.hxx"
+#include "mrb_transform.hxx"
 
 static struct RClass *transform_class;
-
-static void
-transform_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::Transform *transform = (sf::Transform*)ptr;
-    delete transform;
-  }
-}
+static mrb_data_free_func transform_free = cxx_mrb_data_free<sf::Transform>;
 
 extern "C" const struct mrb_data_type mrb_sfml_transform_type = { "sf::Transform", transform_free };
 
 static inline sf::Transform*
 get_transform(mrb_state *mrb, mrb_value self)
 {
-  return (sf::Transform*)mrb_data_get_ptr(mrb, self, &mrb_sfml_transform_type);
+  return static_cast<sf::Transform*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_transform_type));
 }
 
 static inline sf::Vector2f*
 get_vector2f(mrb_state *mrb, mrb_value self)
 {
-  return (sf::Vector2f*)mrb_data_get_ptr(mrb, self, &mrb_sfml_vector2f_type);
+  return static_cast<sf::Vector2f*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_vector2f_type));
 }
 
 extern "C" mrb_value

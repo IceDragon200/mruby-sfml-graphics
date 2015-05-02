@@ -7,15 +7,7 @@
 #include "mrb_shape.hxx"
 
 static struct RClass *convex_shape_class;
-
-static void
-convex_shape_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::ConvexShape *convex_shape = static_cast<sf::ConvexShape*>(ptr);
-    delete convex_shape;
-  }
-}
+static mrb_data_free_func convex_shape_free = cxx_mrb_data_free<sf::ConvexShape>;
 
 extern "C" const struct mrb_data_type mrb_sfml_convex_shape_type = { "sf::ConvexShape", convex_shape_free };
 
@@ -25,6 +17,12 @@ get_convex_shape(mrb_state *mrb, mrb_value self)
   return static_cast<sf::ConvexShape*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_convex_shape_type));
 }
 
+/* @!class ConvexShape
+ * @!method initialize
+ *   @overload initialize
+ *   @overload initialize(point_count)
+ *     @param [Integer] point_count
+ */
 static mrb_value
 convex_shape_initialize(mrb_state *mrb, mrb_value self)
 {

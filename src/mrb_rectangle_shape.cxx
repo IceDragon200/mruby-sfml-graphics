@@ -3,6 +3,7 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb_rectangle_shape.hxx"
 #include "mrb_shape.hxx"
 

@@ -2,32 +2,20 @@
 #include <mruby/class.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/BlendMode.hpp>
+#include "mrb/cxx/helpers.hxx"
+#include "mrb/sfml/graphics/blend_mode.hxx"
 #include "mrb_blend_mode.hxx"
 
 static struct RClass *blend_mode_class;
-
-static void
-blend_mode_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::BlendMode *blend_mode = static_cast<sf::BlendMode*>(ptr);
-    delete blend_mode;
-  }
-}
+static mrb_data_free_func blend_mode_free = cxx_mrb_data_free<sf::BlendMode>;
 
 extern "C" const mrb_data_type mrb_sfml_blend_mode_type = { "sf::BlendMode", blend_mode_free };
-
-static inline sf::BlendMode*
-get_blend_mode(mrb_state *mrb, mrb_value self)
-{
-  return static_cast<sf::BlendMode*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_blend_mode_type));
-}
 
 extern "C" mrb_value
 mrb_sfml_blend_mode_value(mrb_state *mrb, sf::BlendMode blend_mode)
 {
   mrb_value result = mrb_obj_new(mrb, blend_mode_class, 0, NULL);
-  sf::BlendMode *target = get_blend_mode(mrb, result);
+  sf::BlendMode *target = mrb_sfml_blend_mode_ptr(mrb, result);
   *target = blend_mode;
   return result;
 }
@@ -57,37 +45,37 @@ blend_mode_initialize(mrb_state *mrb, mrb_value self)
 static mrb_value
 blend_mode_get_color_src_factor(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->colorSrcFactor);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->colorSrcFactor);
 }
 
 static mrb_value
 blend_mode_get_color_dst_factor(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->colorDstFactor);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->colorDstFactor);
 }
 
 static mrb_value
 blend_mode_get_color_equation(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->colorEquation);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->colorEquation);
 }
 
 static mrb_value
 blend_mode_get_alpha_src_factor(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->alphaSrcFactor);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->alphaSrcFactor);
 }
 
 static mrb_value
 blend_mode_get_alpha_dst_factor(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->alphaDstFactor);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->alphaDstFactor);
 }
 
 static mrb_value
 blend_mode_get_alpha_equation(mrb_state *mrb, mrb_value self)
 {
-  return mrb_fixnum_value(get_blend_mode(mrb, self)->alphaEquation);
+  return mrb_fixnum_value(mrb_sfml_blend_mode_ptr(mrb, self)->alphaEquation);
 }
 
 static mrb_value
@@ -95,7 +83,7 @@ blend_mode_set_color_src_factor(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->colorSrcFactor = (sf::BlendMode::Factor)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->colorSrcFactor = (sf::BlendMode::Factor)value;
   return self;
 }
 
@@ -104,7 +92,7 @@ blend_mode_set_color_dst_factor(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->colorDstFactor = (sf::BlendMode::Factor)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->colorDstFactor = (sf::BlendMode::Factor)value;
   return self;
 }
 
@@ -113,7 +101,7 @@ blend_mode_set_color_equation(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->colorEquation = (sf::BlendMode::Equation)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->colorEquation = (sf::BlendMode::Equation)value;
   return self;
 }
 
@@ -122,7 +110,7 @@ blend_mode_set_alpha_src_factor(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->alphaSrcFactor = (sf::BlendMode::Factor)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->alphaSrcFactor = (sf::BlendMode::Factor)value;
   return self;
 }
 
@@ -131,7 +119,7 @@ blend_mode_set_alpha_dst_factor(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->alphaDstFactor = (sf::BlendMode::Factor)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->alphaDstFactor = (sf::BlendMode::Factor)value;
   return self;
 }
 
@@ -140,7 +128,7 @@ blend_mode_set_alpha_equation(mrb_state *mrb, mrb_value self)
 {
   mrb_int value;
   mrb_get_args(mrb, "i", &value);
-  get_blend_mode(mrb, self)->alphaEquation = (sf::BlendMode::Equation)value;
+  mrb_sfml_blend_mode_ptr(mrb, self)->alphaEquation = (sf::BlendMode::Equation)value;
   return self;
 }
 

@@ -3,44 +3,21 @@
 #include <mruby/data.h>
 #include <mruby/numeric.h>
 #include <SFML/Graphics/Rect.hpp>
+#include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/rect.hxx"
 #include "mrb/sfml/system/vector2.hxx"
-#include "mrb/cxx/helpers.hxx"
 
 static struct RClass *int_rect_class;
 static struct RClass *float_rect_class;
-
-template <typename T> static void
-rect_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::Rect<T> *rect = (sf::Rect<T>*)ptr;
-    delete rect;
-  }
-}
-
+template <typename T> static mrb_data_free_func rect_free = cxx_mrb_data_free<sf::Rect<T>>;
 extern "C" const struct mrb_data_type mrb_sfml_int_rect_type = { "sf::IntRect", rect_free<int> };
 extern "C" const struct mrb_data_type mrb_sfml_float_rect_type = { "sf::FloatRect", rect_free<float> };
-
-template <typename T>
-static inline sf::Rect<T>*
-get_rect(mrb_state *mrb, mrb_value self)
-{
-  return static_cast<sf::Rect<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_rect_type<T>()));
-}
-
-template <typename T>
-static inline sf::Vector2<T>*
-get_vector2(mrb_state *mrb, mrb_value self)
-{
-  return static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_vector2_type<T>()));
-}
 
 extern "C" mrb_value
 mrb_sfml_float_rect_value(mrb_state *mrb, sf::FloatRect r)
 {
   mrb_value result = mrb_obj_new(mrb, float_rect_class, 0, NULL);
-  sf::FloatRect *target = get_rect<float>(mrb, result);
+  sf::FloatRect *target = mrb_sfml_rect_ptr<float>(mrb, result);
   *target = r;
   return result;
 }
@@ -49,7 +26,7 @@ extern "C" mrb_value
 mrb_sfml_int_rect_value(mrb_state *mrb, sf::IntRect r)
 {
   mrb_value result = mrb_obj_new(mrb, int_rect_class, 0, NULL);
-  sf::IntRect *target = get_rect<int>(mrb, result);
+  sf::IntRect *target = mrb_sfml_rect_ptr<int>(mrb, result);
   *target = r;
   return result;
 }
@@ -66,8 +43,8 @@ rect_initialize(mrb_state* mrb, mrb_value self)
   if (argc == 0) {
     rect = new sf::Rect<T>();
   } else if (argc == 2) {
-    sf::Vector2<T> v1 = *get_vector2<T>(mrb, o1);
-    sf::Vector2<T> v2 = *get_vector2<T>(mrb, o2);
+    sf::Vector2<T> v1 = *mrb_sfml_vector2_ptr<T>(mrb, o1);
+    sf::Vector2<T> v2 = *mrb_sfml_vector2_ptr<T>(mrb, o2);
     rect = new sf::Rect<T>(v1, v2);
   } else if (argc == 4) {
     rect = new sf::Rect<T>(cxx_mrb_cast<T>(mrb, o1), cxx_mrb_cast<T>(mrb, o2), cxx_mrb_cast<T>(mrb, o3), cxx_mrb_cast<T>(mrb, o4));
@@ -93,52 +70,52 @@ rect_initialize_copy(mrb_state* mrb, mrb_value self)
 template <typename T> static mrb_value
 rect_get_left(mrb_state *mrb, mrb_value self)
 {
-  return cxx_mrb_numeric_value<T>(mrb, get_rect<T>(mrb, self)->left);
+  return cxx_mrb_numeric_value<T>(mrb, mrb_sfml_rect_ptr<T>(mrb, self)->left);
 }
 
 template <typename T> static mrb_value
 rect_get_top(mrb_state *mrb, mrb_value self)
 {
-  return cxx_mrb_numeric_value<T>(mrb, get_rect<T>(mrb, self)->top);
+  return cxx_mrb_numeric_value<T>(mrb, mrb_sfml_rect_ptr<T>(mrb, self)->top);
 }
 
 template <typename T> static mrb_value
 rect_get_width(mrb_state *mrb, mrb_value self)
 {
-  return cxx_mrb_numeric_value<T>(mrb, get_rect<T>(mrb, self)->width);
+  return cxx_mrb_numeric_value<T>(mrb, mrb_sfml_rect_ptr<T>(mrb, self)->width);
 }
 
 template <typename T> static mrb_value
 rect_get_height(mrb_state *mrb, mrb_value self)
 {
-  return cxx_mrb_numeric_value<T>(mrb, get_rect<T>(mrb, self)->height);
+  return cxx_mrb_numeric_value<T>(mrb, mrb_sfml_rect_ptr<T>(mrb, self)->height);
 }
 
 template <typename T> static mrb_value
 rect_set_top(mrb_state *mrb, mrb_value self)
 {
-  get_rect<T>(mrb, self)->top = cxx_mrb_get_arg<T>(mrb);
+  mrb_sfml_rect_ptr<T>(mrb, self)->top = cxx_mrb_get_arg<T>(mrb);
   return self;
 }
 
 template <typename T> static mrb_value
 rect_set_left(mrb_state *mrb, mrb_value self)
 {
-  get_rect<T>(mrb, self)->left = cxx_mrb_get_arg<T>(mrb);
+  mrb_sfml_rect_ptr<T>(mrb, self)->left = cxx_mrb_get_arg<T>(mrb);
   return self;
 }
 
 template <typename T> static mrb_value
 rect_set_width(mrb_state *mrb, mrb_value self)
 {
-  get_rect<T>(mrb, self)->width = cxx_mrb_get_arg<T>(mrb);
+  mrb_sfml_rect_ptr<T>(mrb, self)->width = cxx_mrb_get_arg<T>(mrb);
   return self;
 }
 
 template <typename T> static mrb_value
 rect_set_height(mrb_state *mrb, mrb_value self)
 {
-  get_rect<T>(mrb, self)->height = cxx_mrb_get_arg<T>(mrb);
+  mrb_sfml_rect_ptr<T>(mrb, self)->height = cxx_mrb_get_arg<T>(mrb);
   return self;
 }
 
@@ -148,7 +125,7 @@ rect_contains(mrb_state *mrb, mrb_value self)
 {
   mrb_value a, b;
   mrb_int argc = mrb_get_args(mrb, "o|o", &a, &b);
-  sf::Rect<T> const *rect = get_rect<T>(mrb, self);
+  sf::Rect<T> const *rect = mrb_sfml_rect_ptr<T>(mrb, self);
   if (argc == 1) {
     sf::Vector2<T> vect = *(static_cast<sf::Vector2<T>*>(mrb_data_get_ptr(mrb, a, mrb_get_sfml_vector2_type<T>())));
     return mrb_bool_value(rect->contains(vect));
@@ -163,13 +140,13 @@ rect_intersects(mrb_state *mrb, mrb_value self)
 {
   mrb_value a, b;
   mrb_int argc = mrb_get_args(mrb, "o|o", &a, &b);
-  sf::Rect<T> const *rect = get_rect<T>(mrb, self);
+  sf::Rect<T> const *rect = mrb_sfml_rect_ptr<T>(mrb, self);
   if (argc == 1) {
-    sf::Rect<T> const *other = get_rect<T>(mrb, a);
+    sf::Rect<T> const *other = mrb_sfml_rect_ptr<T>(mrb, a);
     return mrb_bool_value(rect->intersects(*other));
   } else {
-    sf::Rect<T> const *rect_a = get_rect<T>(mrb, a);
-    sf::Rect<T> *rect_b = get_rect<T>(mrb, b);
+    sf::Rect<T> const *rect_a = mrb_sfml_rect_ptr<T>(mrb, a);
+    sf::Rect<T> *rect_b = mrb_sfml_rect_ptr<T>(mrb, b);
     return mrb_bool_value(rect->intersects(*rect_a, *rect_b));
   }
 }

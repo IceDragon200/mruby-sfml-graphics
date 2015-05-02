@@ -7,15 +7,7 @@
 #include "mrb_shape.hxx"
 
 static struct RClass *circle_shape_class;
-
-static void
-circle_shape_free(mrb_state *mrb, void *ptr)
-{
-  if (ptr) {
-    sf::CircleShape *circle_shape = static_cast<sf::CircleShape*>(ptr);
-    delete circle_shape;
-  }
-}
+static mrb_data_free_func circle_shape_free = cxx_mrb_data_free<sf::CircleShape>;
 
 extern "C" const struct mrb_data_type mrb_sfml_circle_shape_type = { "sf::CircleShape", circle_shape_free };
 

@@ -11,7 +11,6 @@
 #include <SFML/Graphics/Transformable.hpp>
 #include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
-#include "mrb/sfml/graphics/transformable.hxx"
 #include "mrb/sfml/system/vector2.hxx"
 
 /*
