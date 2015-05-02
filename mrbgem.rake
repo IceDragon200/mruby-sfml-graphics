@@ -6,5 +6,6 @@ MRuby::Gem::Specification.new('mruby-sfml-graphics') do |spec|
   spec.description = 'SFML Graphics binding'
   spec.homepage = 'https://github.com/IceDragon200/mruby-sfml-graphics'
 
-  spec.add_dependency 'mruby-sfml-system'
+  spec.add_dependency 'mruby-sfml-system', github: 'IceDragon200/mruby-sfml-system'
+  spec.add_dependency 'mruby-sfml-window', github: 'IceDragon200/mruby-sfml-window'
 end
