@@ -24,10 +24,11 @@ render_window_capture(mrb_state *mrb, mrb_value self)
 extern "C" void
 mrb_sfml_render_window_init_bind(mrb_state *mrb, struct RClass *mod)
 {
-  struct RClass *render_window_class = mrb_define_class_under(mrb, mod, "RenderWindow", mrb_class_get_under(mrb, mod, "Window"));
-  MRB_SET_INSTANCE_TT(render_window_class, MRB_TT_DATA);
+  struct RClass *render_window_cls = mrb_define_class_under(mrb, mod, "RenderWindow", mrb_class_get_under(mrb, mod, "Window"));
+  MRB_SET_INSTANCE_TT(render_window_cls, MRB_TT_DATA);
+  mrb_include_module(mrb, render_window_cls, mrb_module_get_under(mrb, mod, "RenderTarget"));
 
-  mrb_sfml_window_bind_class<sf::RenderWindow>(mrb, render_window_class);
-  mrb_sfml_render_target_bind_class<sf::RenderWindow>(mrb, render_window_class);
-  mrb_define_method(mrb, render_window_class, "capture", render_window_capture, MRB_ARGS_NONE());
+  mrb_sfml_window_bind_class<sf::RenderWindow>(mrb, render_window_cls);
+  mrb_sfml_render_target_bind_class<sf::RenderWindow>(mrb, render_window_cls);
+  mrb_define_method(mrb, render_window_cls, "capture", render_window_capture, MRB_ARGS_NONE());
 }
