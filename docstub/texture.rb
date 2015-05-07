@@ -1,4 +1,5 @@
 module SFML
+  # Image living on the graphics card that can be used for drawing
   class Texture
     def initialize
     end

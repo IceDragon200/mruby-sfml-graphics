@@ -1,5 +1,6 @@
 module SFML
-  # Rect is an abstract class for IntRect and FloatRect
+  # Utility class for manipulating 2D axis aligned rectangles
+  # @abstract
   class Rect
     # @!attribute top
     #   @return [Numeric]

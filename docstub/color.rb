@@ -1,5 +1,5 @@
 module SFML
-  # A RGBA32 (8 bits per channel) color
+  # Utility class for manipulating RGBA colors
   class Color
     # @!attribute r
     #   @return [Integer]

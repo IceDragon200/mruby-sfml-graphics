@@ -1,4 +1,5 @@
 module SFML
+  # Shader class (vertex and fragment)
   class Shader
     # Initializes a new invalid shader
     def initialize

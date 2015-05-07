@@ -1,4 +1,5 @@
 module SFML
+  # Class for loading, manipulating and saving images
   class Image
     def initialize
     end

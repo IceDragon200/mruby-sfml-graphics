@@ -1,4 +1,5 @@
 module SFML
+  # Decomposed transform defined by a position, a rotation and a scale
   module Transformable
     # @overload set_position(x, y)
     #   @param [Float] x

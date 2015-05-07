@@ -1,4 +1,5 @@
 module SFML
+  # Base class for textured shapes with outline
   class Shape
     include Drawable
     include Transformable

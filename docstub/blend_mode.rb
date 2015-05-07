@@ -1,4 +1,5 @@
 module SFML
+  # Blending modes for drawing
   class BlendMode
     module Factor
       # @return [Integer]

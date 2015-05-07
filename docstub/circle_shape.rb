@@ -1,5 +1,5 @@
 module SFML
-  # A shape for rendering Circles
+  # Specialized shape representing a circle
   class CircleShape < Shape
     def initialize
     end
