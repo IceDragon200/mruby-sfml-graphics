@@ -7,7 +7,7 @@ module SFML
     # @param [Object] other
     # @return [Boolean]
     def ==(other)
-      other.is_a?(Color) && equal_color?(other)
+      other.is_a?(SFML::Color) && equal_color?(other)
     end
   end
 end

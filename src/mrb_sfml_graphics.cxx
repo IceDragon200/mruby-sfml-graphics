@@ -22,12 +22,10 @@
 #include "mrb_transform.hxx"
 #include "mrb_view.hxx"
 
-static struct RClass *sfml_module;
-
 extern "C" void
 mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
 {
-  sfml_module = mrb_define_module(mrb, "SFML");
+  struct RClass* sfml_module = mrb_define_module(mrb, "SFML");
   mrb_define_module_under(mrb, sfml_module, "Drawable");
   mrb_define_module_under(mrb, sfml_module, "Transformable");
 

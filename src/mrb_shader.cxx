@@ -63,27 +63,27 @@ shader_load_from_memory(mrb_state *mrb, mrb_value self)
 }
 
 static void
-shader_set_parameter_data(mrb_state *mrb, sf::Shader *shader, std::string &name, mrb_value x)
+shader_set_uniform_data(mrb_state *mrb, sf::Shader *shader, std::string &name, mrb_value x)
 {
   void *dptr = DATA_PTR(x);
   const struct mrb_data_type *dt = DATA_TYPE(x);
   if (&mrb_sfml_color_type == dt) {
-    shader->setParameter(name, *((sf::Color*)dptr));
+    shader->setUniform(name, sf::Glsl::Vec4(*((sf::Color*)dptr)));
   } else if (&mrb_sfml_texture_type == dt) {
-    shader->setParameter(name, *((sf::Texture*)dptr));
+    shader->setUniform(name, *((sf::Texture*)dptr));
   } else if (&mrb_sfml_transform_type == dt) {
-    shader->setParameter(name, *((sf::Transform*)dptr));
+    shader->setUniform(name, sf::Glsl::Mat3(*((sf::Transform*)dptr)));
   } else if (&mrb_sfml_vector2f_type == dt) {
-    shader->setParameter(name, *((sf::Vector2f*)dptr));
+    shader->setUniform(name, sf::Glsl::Vec2(*((sf::Vector2f*)dptr)));
   } else if (&mrb_sfml_vector3f_type == dt) {
-    shader->setParameter(name, *((sf::Vector3f*)dptr));
+    shader->setUniform(name, sf::Glsl::Vec3(*((sf::Vector3f*)dptr)));
   } else {
     mrb_raise(mrb, E_TYPE_ERROR, "expected SFML::Color, SFML::Texture, SFML::Transform, SFML::Vector2, or SFML::Vector3");
   }
 }
 
 static mrb_value
-shader_set_parameter(mrb_state *mrb, mrb_value self)
+shader_set_uniform(mrb_state *mrb, mrb_value self)
 {
   char *name;
   sf::Shader *shader;
@@ -96,21 +96,21 @@ shader_set_parameter(mrb_state *mrb, mrb_value self)
     switch (mrb_type(x)) {
       case MRB_TT_FIXNUM:
       case MRB_TT_FLOAT: {
-        shader->setParameter(sname, (float)mrb_to_flo(mrb, x));
+        shader->setUniform(sname, (float)mrb_to_flo(mrb, x));
       } break;
       case MRB_TT_DATA: {
-        shader_set_parameter_data(mrb, shader, sname, x);
+        shader_set_uniform_data(mrb, shader, sname, x);
       } break;
       default: {
         mrb_raise(mrb, E_TYPE_ERROR, "expected Numeric, or DATA");
       }
     }
   } else if (argc == 3) {
-    shader->setParameter(sname, (float)mrb_to_flo(mrb, x), (float)y);
+    shader->setUniform(sname, sf::Glsl::Vec2((float)mrb_to_flo(mrb, x), (float)y));
   } else if (argc == 4) {
-    shader->setParameter(sname, (float)mrb_to_flo(mrb, x), (float)y, (float)z);
+    shader->setUniform(sname, sf::Glsl::Vec3((float)mrb_to_flo(mrb, x), (float)y, (float)z));
   } else if (argc == 5) {
-    shader->setParameter(sname, (float)mrb_to_flo(mrb, x), (float)y, (float)z, (float)w);
+    shader->setUniform(sname, sf::Glsl::Vec4((float)mrb_to_flo(mrb, x), (float)y, (float)z, (float)w));
   } else {
     mrb_raise(mrb, E_ARGUMENT_ERROR, "expected 2, 3, 4, or 5 arguments");
   }
@@ -148,7 +148,7 @@ mrb_sfml_shader_init_bind(mrb_state *mrb, struct RClass *mod)
   mrb_define_method(mrb, shader_class, "initialize",       shader_initialize,       MRB_ARGS_NONE());
   mrb_define_method(mrb, shader_class, "load_from_file",   shader_load_from_file,   MRB_ARGS_REQ(2));
   mrb_define_method(mrb, shader_class, "load_from_memory", shader_load_from_memory, MRB_ARGS_REQ(2));
-  mrb_define_method(mrb, shader_class, "set_parameter",    shader_set_parameter,    MRB_ARGS_ANY());
+  mrb_define_method(mrb, shader_class, "set_uniform",      shader_set_uniform,    MRB_ARGS_ANY());
 
   //mrb_define_method(mrb, shader_class, "native_handle",   shader_get_native_handle, MRB_ARGS_NONE());
 

@@ -1,5 +1,12 @@
 module SFML
   class Shader
+    # (see #set_uniform)
+    # @deprecated use #set_uniform instead
+    def set_parameter(*args, &block)
+      warn "set_parameter is deprecated, use #set_uniform instead"
+      set_uniform(*args, &block)
+    end
+
     # Loads a vertex shader from file
     #
     # @param [String] filename

@@ -159,15 +159,15 @@ mrb_sfml_blend_mode_init_bind(mrb_state *mrb, struct RClass *mod)
   mrb_define_method(mrb, blend_mode_class, "alpha_dst_factor=", blend_mode_set_alpha_dst_factor, MRB_ARGS_REQ(1));
   mrb_define_method(mrb, blend_mode_class, "alpha_equation=",   blend_mode_set_alpha_equation,   MRB_ARGS_REQ(1));
 
-  mrb_define_const(mrb, blend_mode_factor_module, "Zero", mrb_fixnum_value(sf::BlendMode::Factor::Zero));
-  mrb_define_const(mrb, blend_mode_factor_module, "One", mrb_fixnum_value(sf::BlendMode::Factor::One));
-  mrb_define_const(mrb, blend_mode_factor_module, "SrcColor", mrb_fixnum_value(sf::BlendMode::Factor::SrcColor));
+  mrb_define_const(mrb, blend_mode_factor_module, "Zero",             mrb_fixnum_value(sf::BlendMode::Factor::Zero));
+  mrb_define_const(mrb, blend_mode_factor_module, "One",              mrb_fixnum_value(sf::BlendMode::Factor::One));
+  mrb_define_const(mrb, blend_mode_factor_module, "SrcColor",         mrb_fixnum_value(sf::BlendMode::Factor::SrcColor));
   mrb_define_const(mrb, blend_mode_factor_module, "OneMinusSrcColor", mrb_fixnum_value(sf::BlendMode::Factor::OneMinusSrcColor));
-  mrb_define_const(mrb, blend_mode_factor_module, "DstColor", mrb_fixnum_value(sf::BlendMode::Factor::DstColor));
+  mrb_define_const(mrb, blend_mode_factor_module, "DstColor",         mrb_fixnum_value(sf::BlendMode::Factor::DstColor));
   mrb_define_const(mrb, blend_mode_factor_module, "OneMinusDstColor", mrb_fixnum_value(sf::BlendMode::Factor::OneMinusDstColor));
-  mrb_define_const(mrb, blend_mode_factor_module, "SrcAlpha", mrb_fixnum_value(sf::BlendMode::Factor::SrcAlpha));
+  mrb_define_const(mrb, blend_mode_factor_module, "SrcAlpha",         mrb_fixnum_value(sf::BlendMode::Factor::SrcAlpha));
   mrb_define_const(mrb, blend_mode_factor_module, "OneMinusSrcAlpha", mrb_fixnum_value(sf::BlendMode::Factor::OneMinusSrcAlpha));
-  mrb_define_const(mrb, blend_mode_factor_module, "DstAlpha", mrb_fixnum_value(sf::BlendMode::Factor::DstAlpha));
+  mrb_define_const(mrb, blend_mode_factor_module, "DstAlpha",         mrb_fixnum_value(sf::BlendMode::Factor::DstAlpha));
   mrb_define_const(mrb, blend_mode_factor_module, "OneMinusDstAlpha", mrb_fixnum_value(sf::BlendMode::Factor::OneMinusDstAlpha));
 
   mrb_define_const(mrb, blend_mode_equation_module, "Add", mrb_fixnum_value(sf::BlendMode::Equation::Add));
