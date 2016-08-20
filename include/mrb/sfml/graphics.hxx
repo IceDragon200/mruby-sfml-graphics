@@ -1,3 +1,6 @@
+#ifndef MRB_SFML_GRAPHICS_H
+#define MRB_SFML_GRAPHICS_H
+
 #include "mrb/sfml/graphics/blend_mode.hxx"
 #include "mrb/sfml/graphics/color.hxx"
 #include "mrb/sfml/graphics/glyph.hxx"
@@ -10,3 +13,5 @@
 #include "mrb/sfml/graphics/text.hxx"
 #include "mrb/sfml/graphics/texture.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
+
+#endif
