@@ -155,7 +155,6 @@ mrb_sfml_render_target_bind_class(mrb_state *mrb, struct RClass *cls)
 
   mrb_define_alias(mrb, cls, "view=", "set_view");
   mrb_define_alias(mrb, cls, "view", "get_view");
-  mrb_define_alias(mrb, cls, "view", "get_view");
   mrb_define_alias(mrb, cls, "size", "get_size");
 }
 
