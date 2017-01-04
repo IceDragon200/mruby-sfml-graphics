@@ -16,7 +16,7 @@
  */
 template <class T>
 static inline T*
-get_drawable(mrb_state *mrb, mrb_value self)
+mrb_sfml_get_drawable(mrb_state *mrb, mrb_value self)
 {
   return cxx_mrb_data_get_ptr<T>(mrb, self);
 }
