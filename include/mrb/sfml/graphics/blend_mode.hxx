@@ -4,9 +4,10 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/BlendMode.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_blend_mode_type;
-extern "C" mrb_value mrb_sfml_blend_mode_value(mrb_state*, sf::BlendMode);
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_blend_mode_type;
+MRB_SFML_EXTERN mrb_value mrb_sfml_blend_mode_value(mrb_state*, sf::BlendMode);
 
 static inline sf::BlendMode*
 mrb_sfml_blend_mode_ptr(mrb_state *mrb, mrb_value self)

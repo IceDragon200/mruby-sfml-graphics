@@ -14,8 +14,9 @@
 #include "mrb/sfml/graphics/rect.hxx"
 #include "mrb_transformable.hxx"
 #include "mrb_drawable.hxx"
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" void mrb_sfml_shape_init_bind(mrb_state *mrb, struct RClass *mod);
+MRB_SFML_EXTERN void mrb_sfml_shape_init_bind(mrb_state *mrb, struct RClass *mod);
 
 /*
  * WARNING: DO NOT, and I repeat, DO NOT USE THIS FUNCTION ON NON-SHAPE

@@ -20,7 +20,7 @@
 static struct RClass *text_class;
 static mrb_data_free_func text_free = cxx_mrb_data_free<sf::Text>;
 
-extern "C" const struct mrb_data_type mrb_sfml_text_type = { "sf::Text", text_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_text_type = { "sf::Text", text_free };
 
 static inline sf::Text*
 get_text(mrb_state *mrb, mrb_value self)
@@ -50,7 +50,7 @@ text_initialize(mrb_state *mrb, mrb_value self)
   return self;
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_text_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   text_class = mrb_define_class_under(mrb, mod, "Text", mrb->object_class);

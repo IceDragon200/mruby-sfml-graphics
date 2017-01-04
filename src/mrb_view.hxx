@@ -3,7 +3,8 @@
 
 #include <mruby.h>
 #include <mruby/class.h>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" void mrb_sfml_view_init_bind(mrb_state *mrb, struct RClass *mod);
+MRB_SFML_EXTERN void mrb_sfml_view_init_bind(mrb_state *mrb, struct RClass *mod);
 
 #endif

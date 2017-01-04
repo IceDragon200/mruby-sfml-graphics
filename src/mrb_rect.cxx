@@ -10,10 +10,10 @@
 static struct RClass *int_rect_class;
 static struct RClass *float_rect_class;
 template <typename T> static mrb_data_free_func rect_free = cxx_mrb_data_free<sf::Rect<T>>;
-extern "C" const struct mrb_data_type mrb_sfml_int_rect_type = { "sf::IntRect", rect_free<int> };
-extern "C" const struct mrb_data_type mrb_sfml_float_rect_type = { "sf::FloatRect", rect_free<float> };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_int_rect_type = { "sf::IntRect", rect_free<int> };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_float_rect_type = { "sf::FloatRect", rect_free<float> };
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_float_rect_value(mrb_state *mrb, sf::FloatRect r)
 {
   mrb_value result = mrb_obj_new(mrb, float_rect_class, 0, NULL);
@@ -22,7 +22,7 @@ mrb_sfml_float_rect_value(mrb_state *mrb, sf::FloatRect r)
   return result;
 }
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_int_rect_value(mrb_state *mrb, sf::IntRect r)
 {
   mrb_value result = mrb_obj_new(mrb, int_rect_class, 0, NULL);
@@ -168,7 +168,7 @@ rect_bind_class(mrb_state *mrb, struct RClass *cls)
   mrb_define_method(mrb, cls, "intersects?",     rect_intersects<T>,      MRB_ARGS_ARG(1,1));
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_rect_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *rect_class = mrb_define_class_under(mrb, mod, "Rect", mrb->object_class);

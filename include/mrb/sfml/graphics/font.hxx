@@ -4,8 +4,9 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/Font.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_font_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_font_type;
 
 static inline sf::Font*
 mrb_sfml_font_ptr(mrb_state *mrb, mrb_value self)

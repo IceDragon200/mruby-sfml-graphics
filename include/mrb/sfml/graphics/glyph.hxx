@@ -4,9 +4,10 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/Glyph.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_glyph_type;
-extern "C" mrb_value mrb_sfml_glyph_value(mrb_state*, sf::Glyph);
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_glyph_type;
+MRB_SFML_EXTERN mrb_value mrb_sfml_glyph_value(mrb_state*, sf::Glyph);
 
 static inline sf::Glyph*
 mrb_sfml_glyph_ptr(mrb_state *mrb, mrb_value self)

@@ -4,8 +4,9 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/Shader.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_shader_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_shader_type;
 
 static inline sf::Shader*
 mrb_sfml_shader_ptr(mrb_state *mrb, mrb_value self)

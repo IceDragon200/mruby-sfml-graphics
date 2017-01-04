@@ -12,9 +12,9 @@
 
 static struct RClass *image_class;
 static mrb_data_free_func image_free = cxx_mrb_data_free<sf::Image>;
-extern "C" const struct mrb_data_type mrb_sfml_image_type = { "sf::Image", image_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_image_type = { "sf::Image", image_free };
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_image_value(mrb_state *mrb, sf::Image img)
 {
   mrb_value result = mrb_obj_new(mrb, image_class, 0, NULL);
@@ -134,7 +134,7 @@ image_flip_vertically(mrb_state *mrb, mrb_value self)
   return self;
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_image_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   image_class = mrb_define_class_under(mrb, mod, "Image", mrb->object_class);

@@ -9,7 +9,7 @@
 static struct RClass *circle_shape_class;
 static mrb_data_free_func circle_shape_free = cxx_mrb_data_free<sf::CircleShape>;
 
-extern "C" const struct mrb_data_type mrb_sfml_circle_shape_type = { "sf::CircleShape", circle_shape_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_circle_shape_type = { "sf::CircleShape", circle_shape_free };
 
 static inline sf::CircleShape*
 get_circle_shape(mrb_state *mrb, mrb_value self)
@@ -63,7 +63,7 @@ circle_shape_set_point_count(mrb_state *mrb, mrb_value self)
   return self;
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_circle_shape_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   circle_shape_class = mrb_define_class_under(mrb, mod, "CircleShape", mrb_class_get_under(mrb, mod, "Shape"));

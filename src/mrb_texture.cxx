@@ -12,7 +12,7 @@
 #include "mrb_texture.hxx"
 
 static mrb_data_free_func texture_free = cxx_mrb_data_free<sf::Texture>;
-extern "C" const struct mrb_data_type mrb_sfml_texture_type = { "sf::Texture", texture_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_texture_type = { "sf::Texture", texture_free };
 
 static mrb_value
 texture_initialize(mrb_state *mrb, mrb_value self)
@@ -187,7 +187,7 @@ texture_s_get_maximum_size(mrb_state *mrb, mrb_value self)
   return mrb_fixnum_value(sf::Texture::getMaximumSize());
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_texture_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *texture_class = mrb_define_class_under(mrb, mod, "Texture", mrb->object_class);
@@ -223,7 +223,7 @@ mrb_sfml_texture_init_bind(mrb_state *mrb, struct RClass *mod)
   mrb_define_alias(mrb, texture_class, "srgb?", "is_srgb");
 
   mrb_define_method(mrb, texture_class, "set_repeated",       texture_set_repeated,       MRB_ARGS_REQ(1));
-  mrb_define_method(mrb, texture_class, "is_repeated",        texture_is_repeated,        MRB_ARGS_NONE());
+  mrb_define_method(mrb, texture_class, "is_repeated?",       texture_is_repeated,        MRB_ARGS_NONE());
   mrb_define_alias(mrb, texture_class, "repeated=", "set_repeated");
   mrb_define_alias(mrb, texture_class, "repeated", "is_repeated?");
   mrb_define_alias(mrb, texture_class, "repeated?", "is_repeated?");

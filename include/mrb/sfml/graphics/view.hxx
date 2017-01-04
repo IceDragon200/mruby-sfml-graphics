@@ -5,8 +5,9 @@
 #include <mruby/class.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/View.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_view_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_view_type;
 
 static inline sf::View*
 mrb_sfml_view_ptr(mrb_state *mrb, mrb_value self)

@@ -12,6 +12,7 @@
 #include "mrb/cxx/helpers.hxx"
 #include "mrb/sfml/graphics/transform.hxx"
 #include "mrb/sfml/system/vector2.hxx"
+#include "mrb/sfml/helpers.hxx"
 
 /*
  * WARNING: DO NOT, and I repeat, DO NOT USE THIS FUNCTION ON NON-TRANSFORMABLE

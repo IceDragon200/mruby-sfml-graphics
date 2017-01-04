@@ -18,7 +18,7 @@ rectangle_shape_free(mrb_state *mrb, void *ptr)
   }
 }
 
-extern "C" const struct mrb_data_type mrb_sfml_rectangle_shape_type = { "sf::RectangleShape", rectangle_shape_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_rectangle_shape_type = { "sf::RectangleShape", rectangle_shape_free };
 
 static inline sf::RectangleShape*
 get_rectangle_shape(mrb_state *mrb, mrb_value self)
@@ -60,7 +60,7 @@ rectangle_shape_get_size(mrb_state *mrb, mrb_value self)
   return mrb_sfml_vector2f_value(mrb, get_rectangle_shape(mrb, self)->getSize());
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_rectangle_shape_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   rectangle_shape_class = mrb_define_class_under(mrb, mod, "RectangleShape", mrb_class_get_under(mrb, mod, "Shape"));

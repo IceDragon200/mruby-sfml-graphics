@@ -5,8 +5,9 @@
 #include <mruby/data.h>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include "mrb/sfml/graphics/render_texture.hxx"
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_render_texture_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_texture_type;
 
 static inline sf::RenderTexture*
 mrb_sfml_render_texture_ptr(mrb_state *mrb, mrb_value self)

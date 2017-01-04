@@ -3,7 +3,7 @@
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include "mrb_primitive_type.hxx"
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_primitive_type_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *primitive_type_module = mrb_define_module_under(mrb, mod, "PrimitiveType");

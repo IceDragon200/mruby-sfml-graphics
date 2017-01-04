@@ -4,9 +4,10 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/Image.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_image_type;
-extern "C" mrb_value mrb_sfml_image_value(mrb_state*, sf::Image);
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_image_type;
+MRB_SFML_EXTERN mrb_value mrb_sfml_image_value(mrb_state*, sf::Image);
 
 static inline sf::Image*
 mrb_sfml_image_ptr(mrb_state *mrb, mrb_value self)

@@ -24,7 +24,7 @@ sprite_free(mrb_state *mrb, void *ptr)
   }
 }
 
-extern "C" const struct mrb_data_type mrb_sfml_sprite_type = { "sf::Sprite", sprite_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_sprite_type = { "sf::Sprite", sprite_free };
 
 static inline sf::Sprite*
 get_sprite(mrb_state *mrb, mrb_value self)
@@ -117,7 +117,7 @@ sprite_get_global_bounds(mrb_state *mrb, mrb_value self)
   return mrb_sfml_float_rect_value(mrb, get_sprite(mrb, self)->getGlobalBounds());
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_sprite_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   sprite_class = mrb_define_class_under(mrb, mod, "Sprite", mrb_class_get_under(mrb, mod, "Shape"));

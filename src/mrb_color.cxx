@@ -10,9 +10,9 @@
 static struct RClass *color_class;
 static mrb_data_free_func color_free = cxx_mrb_data_free<sf::Color>;
 
-extern "C" const struct mrb_data_type mrb_sfml_color_type = { "sf::Color", color_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_color_type = { "sf::Color", color_free };
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_color_value(mrb_state *mrb, sf::Color color)
 {
   mrb_value result = mrb_obj_new(mrb, color_class, 0, NULL);
@@ -151,7 +151,7 @@ color_mul(mrb_state *mrb, mrb_value self)
   return mrb_sfml_color_value(mrb, *col * *other);
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_color_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   color_class = mrb_define_class_under(mrb, mod, "Color", mrb->object_class);

@@ -5,8 +5,9 @@
 #include <mruby/data.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "mrb/sfml/graphics/render_window.hxx"
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_render_window_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_window_type;
 
 template <> inline const mrb_data_type* mrb_get_sfml_window_type<sf::RenderWindow>() { return &mrb_sfml_render_window_type; }
 

@@ -7,7 +7,7 @@
 
 static struct RClass *shape_class;
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_shape_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   shape_class = mrb_define_class_under(mrb, mod, "Shape", mrb->object_class);

@@ -8,9 +8,9 @@
 #include "mrb_view.hxx"
 
 static mrb_data_free_func view_free = cxx_mrb_data_free<sf::View>;
-extern "C" const struct mrb_data_type mrb_sfml_view_type = { "sf::View", view_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_view_type = { "sf::View", view_free };
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_view_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *view_class = mrb_define_class_under(mrb, mod, "View", mrb->object_class);

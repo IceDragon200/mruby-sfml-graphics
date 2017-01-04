@@ -9,7 +9,7 @@
 static struct RClass *convex_shape_class;
 static mrb_data_free_func convex_shape_free = cxx_mrb_data_free<sf::ConvexShape>;
 
-extern "C" const struct mrb_data_type mrb_sfml_convex_shape_type = { "sf::ConvexShape", convex_shape_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_convex_shape_type = { "sf::ConvexShape", convex_shape_free };
 
 static inline sf::ConvexShape*
 get_convex_shape(mrb_state *mrb, mrb_value self)
@@ -69,7 +69,7 @@ convex_shape_set_point_count(mrb_state *mrb, mrb_value self)
   return self;
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_convex_shape_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   convex_shape_class = mrb_define_class_under(mrb, mod, "ConvexShape", mrb_class_get_under(mrb, mod, "Shape"));

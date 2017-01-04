@@ -4,8 +4,9 @@
 #include <mruby.h>
 #include <mruby/data.h>
 #include <SFML/Graphics/RenderStates.hpp>
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" const struct mrb_data_type mrb_sfml_render_states_type;
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_states_type;
 
 static inline sf::RenderStates*
 mrb_sfml_render_states_ptr(mrb_state *mrb, mrb_value self)

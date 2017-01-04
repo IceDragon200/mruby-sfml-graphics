@@ -22,8 +22,9 @@
 #include "mrb_texture.hxx"
 #include "mrb_transform.hxx"
 #include "mrb_view.hxx"
+#include "mrb/sfml/helpers.hxx"
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
 {
   struct RClass* sfml_module = mrb_define_module(mrb, "SFML");
@@ -56,7 +57,7 @@ mrb_mruby_sfml_graphics_gem_init(mrb_state *mrb)
   mrb_sfml_view_init_bind(mrb, sfml_module);
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_mruby_sfml_graphics_gem_final(mrb_state *mrb)
 {
 }

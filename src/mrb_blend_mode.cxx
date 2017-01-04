@@ -9,9 +9,9 @@
 static struct RClass *blend_mode_class;
 static mrb_data_free_func blend_mode_free = cxx_mrb_data_free<sf::BlendMode>;
 
-extern "C" const mrb_data_type mrb_sfml_blend_mode_type = { "sf::BlendMode", blend_mode_free };
+MRB_SFML_EXTERN const mrb_data_type mrb_sfml_blend_mode_type = { "sf::BlendMode", blend_mode_free };
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_blend_mode_value(mrb_state *mrb, sf::BlendMode blend_mode)
 {
   mrb_value result = mrb_obj_new(mrb, blend_mode_class, 0, NULL);
@@ -132,8 +132,7 @@ blend_mode_set_alpha_equation(mrb_state *mrb, mrb_value self)
   return self;
 }
 
-
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_blend_mode_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *blend_mode_factor_module;

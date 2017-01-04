@@ -11,7 +11,7 @@
 #include "mrb_render_texture.hxx"
 
 static mrb_data_free_func render_texture_free = cxx_mrb_data_free<sf::RenderTexture>;
-extern "C" const struct mrb_data_type mrb_sfml_render_texture_type = { "sf::RenderTexture", render_texture_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_texture_type = { "sf::RenderTexture", render_texture_free };
 
 static mrb_value
 render_texture_create(mrb_state *mrb, mrb_value self)
@@ -81,7 +81,7 @@ render_texture_get_texture(mrb_state *mrb, mrb_value self)
   return mrb_iv_get(mrb, self, mrb_intern_lit(mrb, "texture"));
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_render_texture_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *render_texture_cls = mrb_define_class_under(mrb, mod, "RenderTexture", mrb_class_get_under(mrb, mod, "Texture"));

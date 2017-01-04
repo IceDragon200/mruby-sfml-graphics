@@ -25,11 +25,14 @@ static mrb_value
 render_target_clear(mrb_state *mrb, mrb_value self)
 {
   sf::Color *color = NULL;
-  mrb_get_args(mrb, "|d", &color, &mrb_sfml_color_type);
-  if (color) {
+  mrb_int argc = mrb_get_args(mrb, "|d", &color, &mrb_sfml_color_type);
+  if (argc == 0) {
+    get_render_target<T>(mrb, self)->clear();
+  } else if (argc == 1) {
+    assert(color);
     get_render_target<T>(mrb, self)->clear(*color);
   } else {
-    get_render_target<T>(mrb, self)->clear();
+    mrb_raise(mrb, E_RUNTIME_ERROR, "expected 0 or 1 arguments");
   }
   return self;
 }

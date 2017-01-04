@@ -12,7 +12,7 @@
 static struct RClass *transform_class;
 static mrb_data_free_func transform_free = cxx_mrb_data_free<sf::Transform>;
 
-extern "C" const struct mrb_data_type mrb_sfml_transform_type = { "sf::Transform", transform_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_transform_type = { "sf::Transform", transform_free };
 
 static inline sf::Transform*
 get_transform(mrb_state *mrb, mrb_value self)
@@ -26,7 +26,7 @@ get_vector2f(mrb_state *mrb, mrb_value self)
   return static_cast<sf::Vector2f*>(mrb_data_get_ptr(mrb, self, &mrb_sfml_vector2f_type));
 }
 
-extern "C" mrb_value
+MRB_SFML_EXTERN mrb_value
 mrb_sfml_transform_value(mrb_state *mrb, sf::Transform transform)
 {
   mrb_value result = mrb_obj_new(mrb, transform_class, 0, NULL);
@@ -192,7 +192,7 @@ transform_aref(mrb_state *mrb, mrb_value self)
   return mrb_nil_value();
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_transform_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   transform_class = mrb_define_class_under(mrb, mod, "Transform", mrb->object_class);

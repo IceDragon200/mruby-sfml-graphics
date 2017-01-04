@@ -13,7 +13,7 @@
 #include "mrb_render_window.hxx"
 
 static mrb_data_free_func render_window_free = cxx_mrb_data_free<sf::RenderWindow>;
-extern "C" const struct mrb_data_type mrb_sfml_render_window_type = { "sf::RenderWindow", render_window_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_window_type = { "sf::RenderWindow", render_window_free };
 
 static mrb_value
 render_window_capture(mrb_state *mrb, mrb_value self)
@@ -21,7 +21,7 @@ render_window_capture(mrb_state *mrb, mrb_value self)
   return mrb_sfml_image_value(mrb, mrb_sfml_render_window_ptr(mrb, self)->capture());
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_render_window_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   struct RClass *render_window_cls = mrb_define_class_under(mrb, mod, "RenderWindow", mrb_class_get_under(mrb, mod, "Window"));

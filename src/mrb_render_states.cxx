@@ -27,7 +27,7 @@ render_states_free(mrb_state *mrb, void *ptr)
   }
 }
 
-extern "C" const struct mrb_data_type mrb_sfml_render_states_type = { "sf::RenderStates", render_states_free };
+MRB_SFML_EXTERN const struct mrb_data_type mrb_sfml_render_states_type = { "sf::RenderStates", render_states_free };
 
 static inline sf::BlendMode*
 get_blend_mode(mrb_state *mrb, mrb_value self)
@@ -176,7 +176,7 @@ render_states_get_shader(mrb_state *mrb, mrb_value self)
   return mrb_iv_get(mrb, self, mrb_intern_lit(mrb, "__sfml_shader"));
 }
 
-extern "C" void
+MRB_SFML_EXTERN void
 mrb_sfml_render_states_init_bind(mrb_state *mrb, struct RClass *mod)
 {
   render_states_class = mrb_define_class_under(mrb, mod, "RenderStates", mrb->object_class);
