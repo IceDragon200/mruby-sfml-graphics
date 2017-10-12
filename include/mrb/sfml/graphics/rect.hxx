@@ -22,4 +22,16 @@ mrb_sfml_rect_ptr(mrb_state *mrb, mrb_value self)
   return static_cast<sf::Rect<T>*>(mrb_data_get_ptr(mrb, self, mrb_get_sfml_rect_type<T>()));
 }
 
+static inline sf::IntRect*
+mrb_sfml_int_rect_ptr(mrb_state *mrb, mrb_value self)
+{
+  return mrb_sfml_rect_ptr<int>(mrb, self);
+}
+
+static inline sf::FloatRect*
+mrb_sfml_float_rect_ptr(mrb_state *mrb, mrb_value self)
+{
+  return mrb_sfml_rect_ptr<float>(mrb, self);
+}
+
 #endif
